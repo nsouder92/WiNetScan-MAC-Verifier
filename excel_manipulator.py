@@ -38,27 +38,22 @@ def manipulate_excel(input_file:str, known_macs:str) -> None:
 
         df_mac = pd.concat([df_filtered, mac_column], axis=1)
 
-        # Have to initialize this column with some sort of data as it throws a warning otherwise.
-        checked_column = pd.DataFrame({'Checked'})
-        checked_column['Checked'] = ""
-        checked_column.drop(checked_column.columns[0], axis=1, inplace=True)
+        # Initialize new checked column with null data.
+        checked_column = pd.DataFrame({'Checked': [''] * len(df_filtered)})
 
         for index, row in df_filtered.iterrows():
-            if row['BSSID'] in known_macs:
-                checked_column.at[index, 'Checked'] = 'Good MAC'
-            else:
-                checked_column.at[index, 'Checked'] = 'Bad MAC'
+            checked_column.at[index, 'Checked'] = 'Good MAC' if row['BSSID'] in known_macs else 'Bad MAC'
 
         df_final_csv = pd.concat([df_mac, checked_column], axis=1)
 
         # Save the modified data to a new CSV file with "_CHECKED" appended to the file name
+        # Set index=False to exclude the DataFrame index from the CSV file
         output_file_name, output_file_extension = path.splitext(input_file)
         output_file_checked = output_file_name + "_CHECKED" + output_file_extension
-
-        # Set index=False to exclude the DataFrame index from the CSV file
         df_final_csv.to_csv(output_file_checked, index=False)
 
-        messagebox.showinfo("Success", "Excel file manipulation completed successfully!")
+        messagebox.showinfo("Success", "Excel file manipulation completed successfully!\n\n" +
+                            "New file saved at: " + output_file_checked)
 
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {str(e)}")
@@ -90,7 +85,7 @@ input_entry = tk.Entry(root, width=50)
 input_entry.grid(row=0, column=1, padx=5, pady=5)
 input_button = tk.Button(root, text="Browse", command=select_input_file)
 input_button.grid(row=0, column=2, padx=5, pady=5)
-data_label = tk.Label(root, text="Known MACs (Separate by newlines):")
+data_label = tk.Label(root, text="Known MACs (Separate by newlines\n" + "or copy & paste from Ticket Scheduler):")
 data_label.grid(row=2, column=0, padx=5, pady=5, sticky="e")
 data_text = tk.Text(root, width=50, height=10)
 data_text.grid(row=2, column=1, padx=5, pady=5)
