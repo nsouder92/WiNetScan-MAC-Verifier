@@ -76,7 +76,7 @@ def execute_manipulation() -> None:
 
 # Create the main Tkinter window
 root = tk.Tk()
-root.title("Wireless Network Scan Excel Manipulator")
+root.title("Wireless Network Scan MAC Verifier")
 
 # Create and place GUI components
 input_label = tk.Label(root, text="Input File:")
