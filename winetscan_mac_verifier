@@ -4,7 +4,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 import pandas as pd
 
-def manipulate_excel(input_file:str, known_macs:str) -> None:
+def mac_check(input_file:str, known_macs:str) -> None:
     '''
     Takes in a CSV file and list of known MACs, which is then filtered to save a new CSV
     containing a check on the BSSID and known MAC entries to determine any good or bad MACs
@@ -72,7 +72,7 @@ def execute_manipulation() -> None:
     '''
     input_file = input_entry.get()
     known_macs = data_text.get("1.0", "end-1c")
-    manipulate_excel(input_file, known_macs)
+    mac_check(input_file, known_macs)
 
 # Create the main Tkinter window
 root = tk.Tk()
