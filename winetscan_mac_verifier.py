@@ -5,7 +5,7 @@ from tkinter import messagebox
 import pandas as pd
 
 def mac_check(input_file:str, known_macs:str) -> None:
-    '''
+    """
     Takes in a CSV file and list of known MACs, which is then filtered to save a new CSV
     containing a check on the BSSID and known MAC entries to determine any good or bad MACs
     in the rows.
@@ -16,7 +16,7 @@ def mac_check(input_file:str, known_macs:str) -> None:
                 
                 known_macs (str):
                     List of known MACs that will be compared to BSSID column.
-    '''
+    """
     try:
         df_input_file = pd.read_csv(input_file)
 
@@ -59,19 +59,17 @@ def mac_check(input_file:str, known_macs:str) -> None:
         messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
 def select_input_file() -> None:
-    '''
-    CSV input file for filtering.
-    '''
+    """Select CSV file for filtering."""
+
     input_file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.csv")])
     input_entry.delete(0, tk.END)
     input_entry.insert(0, input_file_path)
 
 def execute_manipulation() -> None:
-    '''
-    Grabs the input file and known MAC list, executing the main manipulation function.
-    '''
+    """Grabs the input file and known MAC list, executing the main manipulation function."""
+
     input_file = input_entry.get()
-    known_macs = data_text.get("1.0", "end-1c")
+    known_macs = mac_text.get("1.0", "end-1c")
     mac_check(input_file, known_macs)
 
 # Create the main Tkinter window
@@ -85,10 +83,10 @@ input_entry = tk.Entry(root, width=50)
 input_entry.grid(row=0, column=1, padx=5, pady=5)
 input_button = tk.Button(root, text="Browse", command=select_input_file)
 input_button.grid(row=0, column=2, padx=5, pady=5)
-data_label = tk.Label(root, text="Known MACs (Separate by newlines\n" + "or copy & paste from Ticket Scheduler):")
-data_label.grid(row=2, column=0, padx=5, pady=5, sticky="e")
-data_text = tk.Text(root, width=50, height=10)
-data_text.grid(row=2, column=1, padx=5, pady=5)
+mac_label = tk.Label(root, text="Known MACs (Separate by newlines\n" + "or copy & paste from Ticket Scheduler):")
+mac_label.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+mac_text = tk.Text(root, width=50, height=10)
+mac_text.grid(row=2, column=1, padx=5, pady=5)
 
 execute_button = tk.Button(root, text="Execute", command=execute_manipulation)
 execute_button.grid(row=3, column=1, padx=5, pady=5)
