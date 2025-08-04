@@ -1,4 +1,6 @@
 from os import path
+import os
+import re
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -28,7 +30,9 @@ def mac_check(input_file:str, known_macs:str) -> None:
 
         # lowercase both BSSID and known MACs for string comparison.
         df_filtered['BSSID'] = df_filtered['BSSID'].str.lower()
-        known_macs = known_macs.lower().split('\n')
+
+        mac_pattern = re.compile(r'(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}')
+        known_macs = list(set([mac.lower() for mac in mac_pattern.findall(known_macs)]))
 
         mac_column = pd.DataFrame({'Known MACs': known_macs})
 
@@ -83,7 +87,9 @@ input_entry = tk.Entry(root, width=50)
 input_entry.grid(row=0, column=1, padx=5, pady=5)
 input_button = tk.Button(root, text="Browse", command=select_input_file)
 input_button.grid(row=0, column=2, padx=5, pady=5)
-mac_label = tk.Label(root, text="Known MACs (Separate by newlines\n" + "or copy & paste from Ticket Scheduler):")
+
+mac_label = tk.Label(root, text="Known MACs (Copy from SOP):")
+
 mac_label.grid(row=2, column=0, padx=5, pady=5, sticky="e")
 mac_text = tk.Text(root, width=50, height=10)
 mac_text.grid(row=2, column=1, padx=5, pady=5)
