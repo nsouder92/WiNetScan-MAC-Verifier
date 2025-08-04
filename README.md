@@ -25,7 +25,7 @@ This Python application provides a graphical user interface (GUI) to filter a CS
 ```
 ## Code Overview
 ### Main Functions
-#### mac_check(input_file: str, known_macs: str) -> None
+#### mac_check(input_file: str, known_macs: str) -> dict
 This function processes the input CSV file and filters the data based on known MAC addresses provided by the user.
 - #### Parameters:
   - **input_file (str)**: Path to the CSV file to be manipulated/filtered.
