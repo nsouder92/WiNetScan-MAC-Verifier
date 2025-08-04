@@ -29,7 +29,7 @@ This Python application provides a graphical user interface (GUI) to filter a CS
 This function processes the input CSV file and filters the data based on known MAC addresses provided by the user.
 - #### Parameters:
   - **input_file (str)**: Path to the CSV file to be manipulated/filtered.
-  - **known_macs (str)**: List of known MAC addresses separated by newlines.
+  - **known_macs (str)**: List of known MAC addresses copied from the SOP.
 #### select_input_file() -> None
 This function opens a file dialog to select the CSV input file and updates the input entry field in the GUI.
 #### execute_manipulation() -> None
